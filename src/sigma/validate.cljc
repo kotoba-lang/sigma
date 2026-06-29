@@ -4,10 +4,11 @@
   caller decides how to surface them. `valid?` is true iff there are no
   :error-level problems (warnings are advisory)."
   (:require [clojure.string :as str]
+            [kotoba.dsl.problem :as problem]
             [sigma.model :as m]))
 
-(defn- problem [severity code id msg]
-  {:sigma/severity severity :sigma/code code :sigma/id id :sigma/msg msg})
+(defn- sigma-problem [severity code id msg]
+  (problem/problem :sigma severity code id msg))
 
 (defn- parse-field-modifiers
   "Return the modifier strings for a field key, e.g. \"User|contains|all\" → [\"contains\" \"all\"]."
@@ -80,7 +81,7 @@
     ;; severity level: warn if unknown (not a hard error — Sigma evolves)
     (when-let [lvl (:sigma/level r)]
       (when-not (contains? m/known-levels lvl)
-        (conj! ps (problem :warn :rule/unknown-level id
+        (conj! ps (sigma-problem :warn :rule/unknown-level id
                            (str "unknown level " (pr-str lvl)
                                 "; expected one of " m/known-levels)))))
 
@@ -89,7 +90,7 @@
       (doseq [field-key (keys criteria)]
         (doseq [mod (parse-field-modifiers field-key)]
           (when-not (contains? m/known-modifiers mod)
-            (conj! ps (problem :error :field/unknown-modifier sel-name
+            (conj! ps (sigma-problem :error :field/unknown-modifier sel-name
                                (str "unknown modifier '" mod
                                     "' in field key '" field-key "'")))))))
 
@@ -99,11 +100,11 @@
         (case kind
           :plain
           (when-not (contains? sel-names ref)
-            (conj! ps (problem :error :condition/unknown-selection id
+            (conj! ps (sigma-problem :error :condition/unknown-selection id
                                (str "condition references undefined selection '" ref "'"))))
           :glob
           (when-not (glob-matches-any? ref sel-names)
-            (conj! ps (problem :warn :condition/unmatched-glob id
+            (conj! ps (sigma-problem :warn :condition/unmatched-glob id
                                (str "glob '" ref "' in condition matches no defined selection"))))
           nil)))
 
@@ -112,9 +113,9 @@
 (defn errors
   "Return only :error-severity problems."
   [r]
-  (filterv #(= :error (:sigma/severity %)) (problems r)))
+  (problem/errors :sigma (problems r)))
 
 (defn valid?
   "True iff rule `r` has no :error-level structural problems."
   [r]
-  (empty? (errors r)))
+  (problem/valid? :sigma (problems r)))
