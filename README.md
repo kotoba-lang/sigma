@@ -154,3 +154,16 @@ evaluates Sigma detection rules against them without any additional dependencies
 ```
 clojure -X:test
 ```
+
+## Kotoba bounded profile
+
+`src/sigma/bounded_vocabulary.kotoba` is a capability-free port of
+`sigma.model`'s **closed** detection-rule vocabulary — the five severity
+levels (`known-levels`) and the seven field-key pipe-modifiers
+(`known-modifiers`) — plus a name-keyed selection registry
+(selection-name → criteria count) as `kotoba-lang/compiler`'s canonical
+bounded typed-map (`[:map :string :i64]`, ≤31 entries). The open, nested
+criteria maps, the condition-string parser (and/or/not, quantifiers, glob
+matching), and the JSON/YAML I/O stay the CLJC oracle
+(`sigma.model`/`sigma.validate`/`sigma.execute`/`sigma.yaml`). See
+[migration/bounded-vocabulary-and-selection-registry-v1.edn](migration/bounded-vocabulary-and-selection-registry-v1.edn).

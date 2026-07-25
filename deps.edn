@@ -3,7 +3,11 @@
  :deps {io.github.kotoba-lang/dsl-core
         {:git/sha "9bedd2b9d05133a2d9b0656a55135f142ab11a36"}}
  :aliases
- {:test {:extra-paths ["test"]
+ {:kotoba {:replace-paths ["src"]
+           :replace-deps {io.github.kotoba-lang/compiler
+                          {:git/sha "f6ee539e23a967c25893361c4746746e623e8bd4"}}
+           :main-opts ["-m" "kotoba.compiler.cli"]}
+  :test {:extra-paths ["test"]
          :extra-deps {io.github.cognitect-labs/test-runner
                       {:git/tag "v0.5.1" :git/sha "dfb30dd"}}
          :main-opts ["-m" "cognitect.test-runner"]
