@@ -4,7 +4,7 @@
         {:git/sha "9bedd2b9d05133a2d9b0656a55135f142ab11a36"}}
  :aliases
  {:kotoba {:replace-paths ["src"]
-           :replace-deps {io.github.kotoba-lang/compiler
+           :replace-deps {io.github.kotoba-lang/amu
                           {:git/sha "f6ee539e23a967c25893361c4746746e623e8bd4"}}
            :main-opts ["-m" "kotoba.compiler.cli"]}
   :test {:extra-paths ["test"]
