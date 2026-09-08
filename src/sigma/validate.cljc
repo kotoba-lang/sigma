@@ -3,7 +3,7 @@
   {:sigma/severity :error|:warn :sigma/code … :sigma/id … :sigma/msg …} so a
   caller decides how to surface them. `valid?` is true iff there are no
   :error-level problems (warnings are advisory)."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [kotoba.dsl.problem :as problem]
             [sigma.model :as m]))
 
