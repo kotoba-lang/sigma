@@ -25,7 +25,7 @@
     gt          — field value (numeric) is greater than the criterion (numeric)
     lt          — field value (numeric) is less than the criterion (numeric)
     all         — AND over values instead of OR (logic modifier)"
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [sigma.model :as m]
             [sigma.ports :as p]))
 
