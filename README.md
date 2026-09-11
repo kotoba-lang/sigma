@@ -152,7 +152,7 @@ evaluates Sigma detection rules against them without any additional dependencies
 ## Test
 
 ```
-clojure -X:test
+kbb -X:test
 ```
 
 ## Kotoba bounded profile
