@@ -1,6 +1,6 @@
 {:schema "kotoba-sigma-migration/v1"
  :profile :sigma/bounded-vocabulary-and-selection-registry-v1
- :legacy {:source "src/sigma/model.cljc" :status :retained-general-oracle}
+ :legacy {:source "src/sigma/model.cljk" :status :retained-general-oracle}
  :canonical {:kernel-and-conformance "src/sigma/bounded_vocabulary.kotoba"}
  :domain
  {:functions [:known-level? :known-modifier? :empty-registry :add-selection
